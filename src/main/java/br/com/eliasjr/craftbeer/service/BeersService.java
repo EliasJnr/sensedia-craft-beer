@@ -4,10 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.eliasjr.craftbeer.domain.Beers;
 import br.com.eliasjr.craftbeer.exception.NotFoundException;
+import br.com.eliasjr.craftbeer.model.PageModel;
+import br.com.eliasjr.craftbeer.model.PageRequestModel;
 import br.com.eliasjr.craftbeer.repository.BeersRepository;
 
 @Service
@@ -29,7 +34,11 @@ public class BeersService {
 		return result.orElseThrow(() -> new NotFoundException("There are not beer with id = " + id));
 	}
 
-	public List<Beers> listAll() {
-		return beersRepository.findAll();
+	public PageModel<Beers> listAllOnLazyMode(PageRequestModel pr) {
+		Pageable pageable = PageRequest.of(pr.getPage(), pr.getSize());
+		Page<Beers> page = beersRepository.findAll(pageable);
+		PageModel<Beers> pm = new PageModel<>((int) page.getTotalElements(), page.getSize(), page.getTotalPages(),
+				page.getContent());
+		return pm;
 	}
 }
