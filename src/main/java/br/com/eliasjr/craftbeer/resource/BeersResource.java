@@ -2,6 +2,8 @@ package br.com.eliasjr.craftbeer.resource;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.eliasjr.craftbeer.domain.Beers;
+import br.com.eliasjr.craftbeer.dto.BeerCreateDTO;
+import br.com.eliasjr.craftbeer.dto.BeerUpdateDTO;
 import br.com.eliasjr.craftbeer.model.PageModel;
 import br.com.eliasjr.craftbeer.model.PageRequestModel;
 import br.com.eliasjr.craftbeer.service.BeersService;
@@ -27,13 +31,14 @@ public class BeersResource {
 	private BeersService beersService;
 
 	@PostMapping
-	public ResponseEntity<Beers> save(@RequestBody Beers beer) {
-		Beers createdBeer = beersService.save(beer);
+	public ResponseEntity<Beers> save(@RequestBody @Valid BeerCreateDTO beerDto) {
+		Beers createdBeer = beersService.save(beerDto.transformToBeer());
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdBeer);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Beers> update(@PathVariable(name = "id") Long id, @RequestBody Beers beer) {
+	public ResponseEntity<Beers> update(@PathVariable(name = "id") Long id, @RequestBody @Valid BeerUpdateDTO beerDto) {
+		Beers beer = beerDto.transformToBeer();
 		beer.setId(id);
 		Beers updatedBeer = beersService.update(beer);
 		return ResponseEntity.status(HttpStatus.OK).body(updatedBeer);
