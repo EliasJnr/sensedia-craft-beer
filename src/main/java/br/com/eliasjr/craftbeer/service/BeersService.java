@@ -29,6 +29,12 @@ public class BeersService {
 		return beersRepository.save(beer);
 	}
 
+	public Beers patchUpdate(Long id, double price) {
+		Beers beer = getById(id);
+		beer.setPrice(price);
+		return beersRepository.save(beer);
+	}
+
 	public Beers getById(Long id) {
 		Optional<Beers> result = beersRepository.findById(id);
 		return result.orElseThrow(() -> new NotFoundException("There are not beer with id = " + id));
@@ -41,4 +47,5 @@ public class BeersService {
 				page.getContent());
 		return pm;
 	}
+
 }

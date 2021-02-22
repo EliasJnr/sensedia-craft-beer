@@ -1,6 +1,7 @@
 package br.com.eliasjr.craftbeer.resource;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,6 +43,12 @@ public class BeersResource {
 		Beers beer = beerDto.transformToBeer();
 		beer.setId(id);
 		Beers updatedBeer = beersService.update(beer);
+		return ResponseEntity.status(HttpStatus.OK).body(updatedBeer);
+	}
+
+	@PatchMapping("/{id}")
+	public ResponseEntity<Beers> updatePatch(@PathVariable(name = "id") Long id, @RequestParam("price") double price) {
+		Beers updatedBeer = beersService.patchUpdate(id, price);
 		return ResponseEntity.status(HttpStatus.OK).body(updatedBeer);
 	}
 
