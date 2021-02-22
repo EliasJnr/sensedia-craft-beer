@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "e78d1e08-298d-4f6c-987f-15eeaa26f773",
+		"name": "craft-beers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"teste 1\",\n  \"ingredients\": \"ingrediente secreto\",\n  \"alcoholContent\": \"10%\",\n  \"price\": 5.0,\n  \"category\": \"cevada\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/beers",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"beers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/beers",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"beers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePrice",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/beers/1?price=10.5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"beers",
+						"1"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "10.5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/beers/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"beers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"teste 1\",\n  \"ingredients\": \"ingrediente secreto, ingrediente misterioso\",\n  \"alcoholContent\": \"15%\",\n  \"price\": 15.0,\n  \"category\": \"cevada\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/beers/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"beers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
