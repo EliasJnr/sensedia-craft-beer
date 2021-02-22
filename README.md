@@ -8,8 +8,8 @@
 # Executar:
 - Executar o comando Maven "mvn spring-boot:run" na raíz
 
-# Console H2
-http://localhost:8080/h2-console
+# Console H2:
+http://localhost:8080/h2-console <br>
 JDBC_URL: *jdbc:h2:mem:AZ*
 
 Acesso a API
