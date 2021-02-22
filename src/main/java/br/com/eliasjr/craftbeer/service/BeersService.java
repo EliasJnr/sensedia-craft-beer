@@ -1,6 +1,5 @@
 package br.com.eliasjr.craftbeer.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,7 @@ public class BeersService {
 				page.getContent());
 		return pm;
 	}
-	
+
 	public void removeById(Long id) {
 		Beers beer = getById(id);
 		beersRepository.delete(beer);

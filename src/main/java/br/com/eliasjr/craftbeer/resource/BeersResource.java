@@ -1,8 +1,5 @@
 package br.com.eliasjr.craftbeer.resource;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +30,6 @@ public class BeersResource {
 	@Autowired
 	private BeersService beersService;
 
-	
 	@GetMapping
 	public ResponseEntity<PageModel<Beers>> listAll(@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size) {
@@ -41,13 +37,13 @@ public class BeersResource {
 		PageModel<Beers> pm = beersService.listAllOnLazyMode(pr);
 		return ResponseEntity.ok(pm);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Beers> save(@RequestBody @Valid BeerCreateDTO beerDto) {
 		Beers createdBeer = beersService.save(beerDto.transformToBeer());
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdBeer);
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Beers> getById(@PathVariable("id") Long id) {
 		Beers beer = beersService.getById(id);
