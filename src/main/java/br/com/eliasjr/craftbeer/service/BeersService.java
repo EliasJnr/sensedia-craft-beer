@@ -29,7 +29,7 @@ public class BeersService {
 		return beersRepository.save(beer);
 	}
 
-	public Beers patchUpdate(Long id, double price) {
+	public Beers updatePrice(Long id, double price) {
 		Beers beer = getById(id);
 		beer.setPrice(price);
 		return beersRepository.save(beer);
@@ -46,6 +46,11 @@ public class BeersService {
 		PageModel<Beers> pm = new PageModel<>((int) page.getTotalElements(), page.getSize(), page.getTotalPages(),
 				page.getContent());
 		return pm;
+	}
+	
+	public void removeById(Long id) {
+		Beers beer = getById(id);
+		beersRepository.delete(beer);
 	}
 
 }

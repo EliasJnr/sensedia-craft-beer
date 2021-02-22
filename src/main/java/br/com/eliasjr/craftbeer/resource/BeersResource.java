@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +33,25 @@ public class BeersResource {
 	@Autowired
 	private BeersService beersService;
 
+	
+	@GetMapping
+	public ResponseEntity<PageModel<Beers>> listAll(@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size) {
+		PageRequestModel pr = new PageRequestModel(page, size);
+		PageModel<Beers> pm = beersService.listAllOnLazyMode(pr);
+		return ResponseEntity.ok(pm);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Beers> save(@RequestBody @Valid BeerCreateDTO beerDto) {
 		Beers createdBeer = beersService.save(beerDto.transformToBeer());
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdBeer);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Beers> getById(@PathVariable("id") Long id) {
+		Beers beer = beersService.getById(id);
+		return ResponseEntity.ok(beer);
 	}
 
 	@PutMapping("/{id}")
@@ -47,23 +63,17 @@ public class BeersResource {
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<Beers> updatePatch(@PathVariable(name = "id") Long id, @RequestParam("price") double price) {
-		Beers updatedBeer = beersService.patchUpdate(id, price);
+	public ResponseEntity<Beers> updatePrice(@PathVariable(name = "id") Long id, @RequestParam("price") double price) {
+		Beers updatedBeer = beersService.updatePrice(id, price);
 		return ResponseEntity.status(HttpStatus.OK).body(updatedBeer);
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Beers> getById(@PathVariable("id") Long id) {
-		Beers beer = beersService.getById(id);
-		return ResponseEntity.ok(beer);
-	}
-
-	@GetMapping
-	public ResponseEntity<PageModel<Beers>> listAll(@RequestParam(value = "page", defaultValue = "0") int page,
-			@RequestParam(value = "size", defaultValue = "10") int size) {
-		PageRequestModel pr = new PageRequestModel(page, size);
-		PageModel<Beers> pm = beersService.listAllOnLazyMode(pr);
-		return ResponseEntity.ok(pm);
+	
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Beers> delete(@PathVariable("id") Long id) {
+		beersService.removeById(id);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 
 }
