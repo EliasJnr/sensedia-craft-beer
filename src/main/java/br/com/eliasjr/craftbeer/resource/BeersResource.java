@@ -68,12 +68,10 @@ public class BeersResource {
 		return ResponseEntity.status(HttpStatus.OK).body(updatedBeer);
 	}
 
-	
-	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Beers> delete(@PathVariable("id") Long id) {
 		beersService.removeById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(null);
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 
 }

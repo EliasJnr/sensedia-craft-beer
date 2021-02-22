@@ -54,5 +54,14 @@ public class BeersRepositoryTests {
 
 		assertThat(beers.size()).isEqualTo(1);
 	}
+	
+	@Test
+	public void removeTest() {
+		Beers beer = beersRepository.getOne(1L);
+		beersRepository.delete(beer);
+		
+		List<Beers> beers = beersRepository.findAll();
+		assertThat(beers.size()).isZero();
+	}
 
 }
