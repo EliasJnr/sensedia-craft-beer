@@ -1,6 +1,6 @@
 # Configuracao:
 - Maven
-- JRE 11
+- JDK 11
 
 # Instalação:
 - Executar o comando Maven "mvn clean install" na raíz
